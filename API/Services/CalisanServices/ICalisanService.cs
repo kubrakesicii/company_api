@@ -9,7 +9,7 @@ namespace API.Services.CalisanServices
     {
          Task<List<CalisanGetirDto>> SilCalisan(int id);
          Task<CalisanGetirDto> EkleCalisan(CalisanEkleDto yeniCalisan);
-         Task<Calisan> GuncelleFirma(Calisan calisan);
+         Task<CalisanGetirDto> GuncelleFirma(Calisan calisan);
          Task<List<CalisanGetirDto>> GetirTümCalisanlar();
     }
 }

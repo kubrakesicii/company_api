@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.DTOs.Calisan;
 using API.Services.CalisanServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,6 +36,14 @@ namespace API.Controllers
         {
             return Ok(await _calisanService.SilCalisan(id));
         }
+
+
+        [HttpPut]
+        public async Task<ActionResult<CalisanGetirDto>> CalisanFirmaGuncelle(CalisanGuncelleDto calisan)
+        {
+            return Ok(await _calisanService.GuncelleFirma(calisan));
+        }
+
 
     }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
+using API.DTOs.Calisan;
 using AutoMapper;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -42,9 +43,17 @@ namespace API.Services.CalisanServices
 
         }
 
-        public Task<Calisan> GuncelleFirma(Calisan calisan)
+        public async Task<CalisanGetirDto> GuncelleFirma(CalisanGuncelleDto calisan)
         {
-            throw new System.NotImplementedException();
+            Calisan guncelCalisan = await _context.Calisanlar.FirstOrDefaultAsync(c => c.Id == calisan.Id);
+
+            guncelCalisan.FirmaId = calisan.FirmaId;
+
+             _context.Calisanlar.Update(guncelCalisan); 
+             await _context.SaveChangesAsync();
+
+             return _mapper.Map<CalisanGetirDto>(guncelCalisan);
+
         }
 
         public async Task<List<CalisanGetirDto>> SilCalisan(int id)

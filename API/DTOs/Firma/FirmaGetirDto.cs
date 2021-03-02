@@ -4,6 +4,6 @@ namespace API.DTOs
     {
         public int Id { get; set; }
         public string Ad { get; set; }
-       // public int CalisanSayisi { get; set; }
+        public int CalisanSayisi { get; set; }
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
+using API.Services.CalisanDepartmanServices;
 using API.Services.CalisanServices;
 using API.Services.DepartmanServices;
+using API.Services.FirmaServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,7 +40,8 @@ namespace API
 
             services.AddScoped<ICalisanService,CalisanService>();
             services.AddScoped<IDepartmanService,DepartmanService>();
-
+            services.AddScoped<ICalisanDepartmanService,CalisanDepartmanService>();
+            services.AddScoped<IFirmaService,FirmaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

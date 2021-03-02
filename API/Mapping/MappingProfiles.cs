@@ -3,7 +3,7 @@ using API.DTOs;
 using AutoMapper;
 using Core.Entities;
 
-namespace API
+namespace API.Mapping
 {
     public class MappingProfiles : Profile
     {

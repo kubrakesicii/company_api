@@ -1,7 +1,7 @@
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace API.DTOs
+namespace API.Data
 {
    public class DatabaseContext : DbContext
     {

@@ -29,7 +29,6 @@
                 "/Views": "${workspaceFolder}/Views"
             }
         },
-        
         {
             "name": ".NET Core Attach",
             "type": "coreclr",

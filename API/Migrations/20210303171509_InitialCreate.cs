@@ -8,6 +8,19 @@ namespace API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Departmanlar",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ad = table.Column<string>(maxLength: 200, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Departmanlar", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Firmalar",
                 columns: table => new
                 {
@@ -21,13 +34,27 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Kullanicilar",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KullaniciAdi = table.Column<string>(nullable: true),
+                    PasswordHash = table.Column<byte[]>(nullable: true),
+                    PasswordSalt = table.Column<byte[]>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kullanicilar", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Calisanlar",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AdSoyad = table.Column<string>(maxLength: 250, nullable: false),
-                    GirisTarihi = table.Column<DateTime>(nullable: false),
                     FirmaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -39,26 +66,6 @@ namespace API.Migrations
                         principalTable: "Firmalar",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Departmanlar",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(maxLength: 200, nullable: false),
-                    FirmaId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Departmanlar", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Departmanlar_Firmalar_FirmaId",
-                        column: x => x.FirmaId,
-                        principalTable: "Firmalar",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -94,17 +101,15 @@ namespace API.Migrations
                 name: "IX_Calisanlar_FirmaId",
                 table: "Calisanlar",
                 column: "FirmaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Departmanlar_FirmaId",
-                table: "Departmanlar",
-                column: "FirmaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "CalisanDepartmanlar");
+
+            migrationBuilder.DropTable(
+                name: "Kullanicilar");
 
             migrationBuilder.DropTable(
                 name: "Calisanlar");

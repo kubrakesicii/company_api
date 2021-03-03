@@ -72,9 +72,6 @@ namespace API.Migrations
                     b.Property<int>("FirmaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("GirisTarihi")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("FirmaId");

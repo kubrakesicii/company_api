@@ -8,9 +8,6 @@ namespace Core.Entities
     {
         public int Id { get; set; }
         public string AdSoyad { get; set; }
-        
-        // Calisanlari eklenme tarihine göre sıralayabilmek icin eklenme tarihi özelliği olmalıdır.
-        public DateTime GirisTarihi { get; set; }
 
         //Her calisan yalnız 1 Firmaya bağlıdır
         public int FirmaId { get; set; }

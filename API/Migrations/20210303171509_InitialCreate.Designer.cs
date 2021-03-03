@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20210303134119_KullaniciModeli")]
-    partial class KullaniciModeli
+    [Migration("20210303171509_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,9 +73,6 @@ namespace API.Migrations
 
                     b.Property<int>("FirmaId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("GirisTarihi")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

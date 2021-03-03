@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.ApiResponse;
 using API.Data;
 using API.DTOs;
 using API.DTOs.Calisan;
@@ -21,8 +22,10 @@ namespace API.Services.CalisanServices
             _context = context;
         }
 
-        public async Task<CalisanGetirDto> EkleCalisan(CalisanEkleDto yeniCalisan)
+        public async Task<ServiceResponse<CalisanGetirDto>> EkleCalisan(CalisanEkleDto yeniCalisan)
         {
+            ServiceResponse<CalisanGetirDto> response = new ServiceResponse<CalisanGetirDto>();
+
             Calisan calisan = _mapper.Map<Calisan>(yeniCalisan);
 
             await _context.Calisanlar.AddAsync(calisan);
@@ -34,52 +37,96 @@ namespace API.Services.CalisanServices
                                      .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
                                      .FirstOrDefaultAsync();
 
-            return _mapper.Map<CalisanGetirDto>(calisanEkle);
+            response.data = _mapper.Map<CalisanGetirDto>(calisanEkle);
+            response.Message = "Kayit Basariyla Eklendi";
+            return response;
         }
 
-        public async Task<List<CalisanGetirDto>> GetirTümCalisanlar()
+        public async Task<ServiceResponse<List<CalisanGetirDto>>> GetirTümCalisanlar()
         {
+            ServiceResponse<List<CalisanGetirDto>> response = new ServiceResponse<List<CalisanGetirDto>>();
+
             List<Calisan> calisanlar = await _context.Calisanlar
                                      .OrderByDescending(c => c.Id)
                                      .Include(c => c.Firma)
                                      .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
                                      .ToListAsync();
 
-            return _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(calisanlar);
+            response.data = _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(calisanlar);
+            response.Message = "Tüm Kayitlar Getirildi";
+
+            return response;
 
         }
 
-        public async Task<CalisanGetirDto> GuncelleFirma(CalisanGuncelleDto calisan)
+        public async Task<ServiceResponse<CalisanGetirDto>> GuncelleFirma(CalisanGuncelleDto calisan)
         {
-            Calisan guncelCalisan = await _context.Calisanlar.FirstOrDefaultAsync(c => c.Id == calisan.Id);
+            ServiceResponse<CalisanGetirDto> response = new ServiceResponse<CalisanGetirDto>();
 
-            guncelCalisan.FirmaId = calisan.YeniFirmaId;
+            try{
+                Calisan guncelCalisan = await _context.Calisanlar.FirstOrDefaultAsync(c => c.Id == calisan.CalisanId);
 
-             _context.Calisanlar.Update(guncelCalisan); 
-             await _context.SaveChangesAsync();
+                if(guncelCalisan != null){
+                    guncelCalisan.FirmaId = calisan.YeniFirmaId;
 
-             Calisan guncel = await _context.Calisanlar
-                                     .Where(c => c.Id == guncelCalisan.Id)
-                                     .Include(c => c.Firma)
-                                     .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
-                                     .FirstOrDefaultAsync();
+                    _context.Calisanlar.Update(guncelCalisan); 
+                    await _context.SaveChangesAsync();
 
-             return _mapper.Map<CalisanGetirDto>(guncel);
+                     Calisan guncel = await _context.Calisanlar
+                                        .Where(c => c.Id == guncelCalisan.Id)
+                                        .Include(c => c.Firma)
+                                        .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
+                                        .FirstOrDefaultAsync();
+                    
+                    response.Success = true;
+                    response.Message = "Kayit Basariyla Guncellendi";
+                    response.data =  _mapper.Map<CalisanGetirDto>(guncel);
+                }
+                else{
+                    response.Message = "Gecersiz Id : Calisan bulunamadı.";
+                    response.Success = false; 
+                }
+            }
+             catch(Exception e){
+                response.Success = false;
+                response.Message = e.Message;
+            }
+
+            return response;
         }
 
-        public async Task<List<CalisanGetirDto>> SilCalisan(int id)
+        public async Task<ServiceResponse<List<CalisanGetirDto>>> SilCalisan(int id)
         {
-            Calisan calisan = await _context.Calisanlar.FirstOrDefaultAsync(c => c.Id == id);
+            ServiceResponse<List<CalisanGetirDto>> response = new ServiceResponse<List<CalisanGetirDto>>();
 
-             _context.Calisanlar.Remove(calisan);
-            await _context.SaveChangesAsync();
+            try{
+                Calisan calisan = await _context.Calisanlar.FirstOrDefaultAsync(c => c.Id == id);
 
-            List<Calisan> calisanlar = await _context.Calisanlar
-                                     .Include(c => c.Firma)
-                                     .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
-                                     .ToListAsync();
+                if(calisan != null){
+                    _context.Calisanlar.Remove(calisan);
+                    await _context.SaveChangesAsync();
 
-            return _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(calisanlar); 
+                    List<Calisan> calisanlar = await _context.Calisanlar
+                                            .Include(c => c.Firma)
+                                            .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
+                                            .ToListAsync();
+
+                    response.Success = true;
+                    response.Message = "Kayit Basariyla Silindi";
+                    response.data = _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(calisanlar); 
+                }
+                
+                else{
+                    response.Message = "Gecersiz Id : Calisan bulunamadı.";
+                    response.Success = false; 
+                }
+            }
+            catch(Exception e){
+                response.Success = false;
+                response.Message = e.Message;
+            }
+
+            return response;
         }
     }
 

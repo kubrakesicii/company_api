@@ -5,7 +5,7 @@ namespace API.DTOs.Calisan
         //Bu DTO sadece ilgili çalışanın Firm'sının güncellemek için kullanılacak
         //Bu yüzden sadece Calisan Id ve Firma ID yeterli
 
-        public int Id { get; set; }
+        public int CalisanId { get; set; }
         public int YeniFirmaId { get; set; }
     }
 }

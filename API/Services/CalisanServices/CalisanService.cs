@@ -53,7 +53,7 @@ namespace API.Services.CalisanServices
         {
             Calisan guncelCalisan = await _context.Calisanlar.FirstOrDefaultAsync(c => c.Id == calisan.Id);
 
-            guncelCalisan.FirmaId = calisan.FirmaId;
+            guncelCalisan.FirmaId = calisan.YeniFirmaId;
 
              _context.Calisanlar.Update(guncelCalisan); 
              await _context.SaveChangesAsync();
@@ -65,7 +65,6 @@ namespace API.Services.CalisanServices
                                      .FirstOrDefaultAsync();
 
              return _mapper.Map<CalisanGetirDto>(guncel);
-
         }
 
         public async Task<List<CalisanGetirDto>> SilCalisan(int id)

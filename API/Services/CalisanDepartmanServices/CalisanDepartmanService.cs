@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -36,7 +37,13 @@ namespace API.Services.CalisanDepartmanServices
             await _context.CalisanDepartmanlar.AddAsync(calisanDepartman);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<CalisanGetirDto>(calisan);
+            Calisan guncelCalisan = await _context.Calisanlar
+                                     .Where(c => c.Id == calisan.Id)
+                                     .Include(c => c.Firma)
+                                     .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
+                                     .FirstOrDefaultAsync();
+
+            return _mapper.Map<CalisanGetirDto>(guncelCalisan);
         }
     }
 }

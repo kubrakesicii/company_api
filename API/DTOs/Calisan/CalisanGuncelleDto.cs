@@ -6,6 +6,6 @@ namespace API.DTOs.Calisan
         //Bu yüzden sadece Calisan Id ve Firma ID yeterli
 
         public int Id { get; set; }
-        public int FirmaId { get; set; }
+        public int YeniFirmaId { get; set; }
     }
 }

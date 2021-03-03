@@ -9,8 +9,7 @@ namespace API.Services.DepartmanServices
     public interface IDepartmanService
     {
         Task<List<DepartmanGetirDto>> GetirTümDepartmanlar();
-        Task<DepartmanaGöreCalisanGetirDto> GetirDepartmanaGöreCalisan(int deptId);
-
+       // Task<DepartmanaGöreCalisanGetirDto> GetirDepartmanaGöreCalisan(int deptId);
         Task<List<DepartmanaGöreCalisanGetirDto>> GetirDepartmanaGöreCalisanlar();
 
     }

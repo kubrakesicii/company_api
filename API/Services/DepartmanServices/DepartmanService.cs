@@ -27,6 +27,7 @@ namespace API.Services.DepartmanServices
             return _mapper.Map<List<Departman>,List<DepartmanGetirDto>>(departmanlar);
         }
 
+/*
         public async Task<DepartmanaGöreCalisanGetirDto> GetirDepartmanaGöreCalisan(int deptId)
         {
             var departman = await _context.Departmanlar.FirstOrDefaultAsync(d => d.Id == deptId);
@@ -53,7 +54,7 @@ namespace API.Services.DepartmanServices
 
             return departmanaGöreCalisan;
         }
-
+*/
 ///////////////////////////////
         public async Task<List<DepartmanaGöreCalisanGetirDto>> GetirDepartmanaGöreCalisanlar()
         {
@@ -66,20 +67,23 @@ namespace API.Services.DepartmanServices
                            join cd in _context.CalisanDepartmanlar
                            on c.Id equals cd.CalisanId
                            where cd.DepartmanId==d.Id
-                           select c.AdSoyad).ToList();
-
-                var firma = _context.Calisanlar.Where(c => c.AdSoyad == calisanListesi.FirstOrDefault()).Select(c => c.Firma).FirstOrDefault();
-
-                List<string> calisanlar = new List<string>();
+                           select new {
+                               Calisan = c.AdSoyad,
+                               Firma = c.Firma.Ad
+                            }).ToList();
+/*
+                var firmaListesi = _context.Calisanlar.Where(c => c.AdSoyad == calisanListesi.FirstOrDefault()).Select(c => c.Firma).ToList();
+*/
+                List<CalisanFirmaDto> calisanlar = new List<CalisanFirmaDto>();
+                CalisanFirmaDto calisanFirmaDto = new CalisanFirmaDto();
 
                 calisanListesi.ForEach(c => {
-                    calisanlar.Add(c);
+                    calisanlar.Add(new CalisanFirmaDto{Calisan = c.Calisan,Firma=c.Firma});
                 });
 
                 DepartmanaGöreCalisanGetirDto departmanaGöreCalisan = new DepartmanaGöreCalisanGetirDto{
                 DepartmanId = d.Id,
-                Calisanlar =calisanlar,
-                Firma = firma.Ad
+                Calisanlar =calisanlar
                 };
 
                 departmanaGöreCalisanlar.Add(departmanaGöreCalisan);

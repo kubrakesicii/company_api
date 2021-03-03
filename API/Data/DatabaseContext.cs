@@ -1,3 +1,4 @@
+using API.Entities;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,8 @@ namespace API.Data
         public DbSet<Calisan> Calisanlar {get; set;}
         public DbSet<Departman> Departmanlar {get; set;}
         public DbSet<CalisanDepartman> CalisanDepartmanlar {get; set;}
+        public DbSet<Kullanici> Kullanicilar {get;set;}
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder){
             modelBuilder.Entity<CalisanDepartman>()

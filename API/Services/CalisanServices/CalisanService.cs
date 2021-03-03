@@ -38,7 +38,7 @@ namespace API.Services.CalisanServices
                                      .FirstOrDefaultAsync();
 
             response.data = _mapper.Map<CalisanGetirDto>(calisanEkle);
-            response.Message = "Kayit Basariyla Eklendi";
+            response.Mesaj = "Kayit Basariyla Eklendi";
             return response;
         }
 
@@ -53,7 +53,7 @@ namespace API.Services.CalisanServices
                                      .ToListAsync();
 
             response.data = _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(calisanlar);
-            response.Message = "Tüm Kayitlar Getirildi";
+            response.Mesaj = "Tüm Kayitlar Getirildi";
 
             return response;
 
@@ -78,18 +78,18 @@ namespace API.Services.CalisanServices
                                         .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
                                         .FirstOrDefaultAsync();
                     
-                    response.Success = true;
-                    response.Message = "Kayit Basariyla Guncellendi";
+                    response.Basari = true;
+                    response.Mesaj = "Kayit Basariyla Guncellendi";
                     response.data =  _mapper.Map<CalisanGetirDto>(guncel);
                 }
                 else{
-                    response.Message = "Gecersiz Id : Calisan bulunamadı.";
-                    response.Success = false; 
+                    response.Mesaj = "Gecersiz Id : Calisan bulunamadı.";
+                    response.Basari = false; 
                 }
             }
              catch(Exception e){
-                response.Success = false;
-                response.Message = e.Message;
+                response.Basari = false;
+                response.Mesaj = e.Message;
             }
 
             return response;
@@ -111,19 +111,19 @@ namespace API.Services.CalisanServices
                                             .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
                                             .ToListAsync();
 
-                    response.Success = true;
-                    response.Message = "Kayit Basariyla Silindi";
+                    response.Basari = true;
+                    response.Mesaj = "Kayit Basariyla Silindi";
                     response.data = _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(calisanlar); 
                 }
                 
                 else{
-                    response.Message = "Gecersiz Id : Calisan bulunamadı.";
-                    response.Success = false; 
+                    response.Mesaj = "Gecersiz Id : Calisan bulunamadı.";
+                    response.Basari = false; 
                 }
             }
             catch(Exception e){
-                response.Success = false;
-                response.Message = e.Message;
+                response.Basari = false;
+                response.Mesaj = e.Message;
             }
 
             return response;

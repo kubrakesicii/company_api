@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
-using Core.Entities;
+using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services.FirmaServices

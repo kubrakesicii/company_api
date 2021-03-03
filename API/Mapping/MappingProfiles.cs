@@ -1,6 +1,7 @@
 using System.Linq;
 using API.DTOs;
 using API.DTOs.Firma;
+using API.Entities;
 using AutoMapper;
 using Core.Entities;
 

@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.DTOs.Departman;
 using API.Services.DepartmanServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,19 @@ namespace API.Controllers
         public async Task<ActionResult<DepartmanGetirDto>> GetirTümDepartmanlar()
         {
             return Ok(await _deptService.GetirTümDepartmanlar());
+        }
+
+        [HttpGet("{deptId}")]
+        public async Task<ActionResult<DepartmanaGöreCalisanGetirDto>> GetirDepartmanaGöreCalisan(int deptId)
+        {
+            return Ok(await _deptService.GetirDepartmanaGöreCalisan(deptId));
+        }
+
+
+        [HttpGet("calisanlar")]
+        public async Task<ActionResult<List<DepartmanaGöreCalisanGetirDto>>> GetirDepartmanaGöreCalisanlar()
+        {
+            return Ok(await _deptService.GetirDepartmanaGöreCalisanlar());
         }
     }
 }

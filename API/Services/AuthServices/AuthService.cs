@@ -23,7 +23,9 @@ namespace API.Services.AuthServices
             _config = config;
             _context = context;
         }
+        
 
+        // Kullanici kaydi yapar.
         public async Task<ServiceResponse<string>> KayıtOl(Kullanici kullanici, string sifre)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
@@ -47,6 +49,8 @@ namespace API.Services.AuthServices
             return response;
         }
 
+
+        // Kullanici Girisi yapar. Giris basarili bir sekilde yapilirsa, ilgili kullaniciya özel JWT gösterilir.
         public async Task<ServiceResponse<string>> GirisYap(string kullaniciAdi, string sifre)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
@@ -69,6 +73,8 @@ namespace API.Services.AuthServices
             return response;
         }
 
+
+        // Kayit olmak isteyen kullanicinin mevcut olup olmadigini gösteren yardimci metot.
         public async Task<bool> KullaniciMevcut(string kullaniciAdi)
         {
             if (await _context.Kullanicilar.AnyAsync(k => k.KullaniciAdi.ToLower() == kullaniciAdi.ToLower()))
@@ -107,6 +113,8 @@ namespace API.Services.AuthServices
             }
         }
 
+
+        // Kullaniciya özel bir Jason Web Token yaratir ve döner
         private string OlusturToken(Kullanici kullanici)
         {
             List<Claim> claims = new List<Claim>{

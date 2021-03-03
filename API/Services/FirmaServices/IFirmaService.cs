@@ -7,7 +7,6 @@ namespace API.Services.FirmaServices
     public interface IFirmaService
     {
         Task<List<FirmaGetirDto>> GetirTümFirmalar();
-        Task<FirmaGetirDto> GetirFirma(int id);
 
     }
 }

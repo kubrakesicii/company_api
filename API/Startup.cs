@@ -33,6 +33,8 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //Veritabani ve DatabaseContext sinifimiz arasinda baglanti saglanir.
             services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(_config.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(Startup));
 

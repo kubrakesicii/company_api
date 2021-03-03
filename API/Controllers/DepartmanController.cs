@@ -17,19 +17,13 @@ namespace API.Controllers
             _deptService = deptService;
         }
 
+
         [HttpGet]
         public async Task<ActionResult<DepartmanGetirDto>> GetirTümDepartmanlar()
         {
             return Ok(await _deptService.GetirTümDepartmanlar());
         }
 
-/*
-        [HttpGet("{deptId}")]
-        public async Task<ActionResult<DepartmanaGöreCalisanGetirDto>> GetirDepartmanaGöreCalisan(int deptId)
-        {
-            return Ok(await _deptService.GetirDepartmanaGöreCalisan(deptId));
-        }
-*/
 
         [HttpGet("calisanlar")]
         public async Task<ActionResult<List<DepartmanaGöreCalisanGetirDto>>> GetirDepartmanaGöreCalisanlar()

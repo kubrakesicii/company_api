@@ -20,6 +20,8 @@ namespace API.Services.DepartmanServices
             _context = context;
         }
 
+
+        // Belirli bir sart olmadan tüm departmanlari listeler.
         public async Task<List<DepartmanGetirDto>> GetirTümDepartmanlar()
         {
             var departmanlar = await _context.Departmanlar.ToListAsync();
@@ -27,35 +29,8 @@ namespace API.Services.DepartmanServices
             return _mapper.Map<List<Departman>,List<DepartmanGetirDto>>(departmanlar);
         }
 
-/*
-        public async Task<DepartmanaGöreCalisanGetirDto> GetirDepartmanaGöreCalisan(int deptId)
-        {
-            var departman = await _context.Departmanlar.FirstOrDefaultAsync(d => d.Id == deptId);
 
-            var calisanListesi = (from c in _context.Calisanlar 
-                           join cd in _context.CalisanDepartmanlar
-                           on c.Id equals cd.CalisanId
-                           where cd.DepartmanId==deptId
-                           select c.AdSoyad).ToList();
-
-            var firma = _context.Calisanlar.Where(c => c.AdSoyad == calisanListesi.FirstOrDefault()).Select(c => c.Firma).FirstOrDefault();
-
-           List<string> calisanlar = new List<string>();
-
-           calisanListesi.ForEach(c => {
-               calisanlar.Add(c);
-           });
-
-            DepartmanaGöreCalisanGetirDto departmanaGöreCalisan = new DepartmanaGöreCalisanGetirDto{
-                DepartmanId = deptId,
-                Calisanlar =calisanlar,
-                Firma = firma.Ad
-            };
-
-            return departmanaGöreCalisan;
-        }
-*/
-///////////////////////////////
+        // Calisanlari ve firmalarini departmanlarina göre gruplandirarak listeler.
         public async Task<List<DepartmanaGöreCalisanGetirDto>> GetirDepartmanaGöreCalisanlar()
         {
             List<Departman> departmanlar = await _context.Departmanlar.ToListAsync();
@@ -71,9 +46,8 @@ namespace API.Services.DepartmanServices
                                Calisan = c.AdSoyad,
                                Firma = c.Firma.Ad
                             }).ToList();
-/*
-                var firmaListesi = _context.Calisanlar.Where(c => c.AdSoyad == calisanListesi.FirstOrDefault()).Select(c => c.Firma).ToList();
-*/
+
+
                 List<CalisanFirmaDto> calisanlar = new List<CalisanFirmaDto>();
                 CalisanFirmaDto calisanFirmaDto = new CalisanFirmaDto();
 

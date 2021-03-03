@@ -19,6 +19,8 @@ namespace API.Services.CalisanDepartmanServices
             _context = context;
         }
 
+
+        // Belirli bir Calisan'a, görev alacagi bir departman ekler.
         public async Task<CalisanGetirDto> EkleCalisanDepartmanı(CalisanDepartmaniEkleDto yeniCalisanDept)
         {
             Calisan calisan = await _context.Calisanlar

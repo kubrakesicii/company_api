@@ -15,6 +15,7 @@ namespace API.Controllers
         {
             _calisanDeptService = calisanDepartmanService;
         }
+        
 
         [HttpPost]
         public async Task<ActionResult<CalisanGetirDto>> EkleCalisanDepartman(CalisanDepartmaniEkleDto yeniDept)

@@ -22,6 +22,7 @@ namespace API.Services.CalisanServices
             _context = context;
         }
 
+        //Yeni Calisan ekler
         public async Task<ServiceResponse<CalisanGetirDto>> EkleCalisan(CalisanEkleDto yeniCalisan)
         {
             ServiceResponse<CalisanGetirDto> response = new ServiceResponse<CalisanGetirDto>();
@@ -42,6 +43,8 @@ namespace API.Services.CalisanServices
             return response;
         }
 
+
+        //Tüm calisanlari listeler.
         public async Task<ServiceResponse<List<CalisanGetirDto>>> GetirTümCalisanlar()
         {
             ServiceResponse<List<CalisanGetirDto>> response = new ServiceResponse<List<CalisanGetirDto>>();
@@ -59,6 +62,8 @@ namespace API.Services.CalisanServices
 
         }
 
+
+        // İlgili calisanin firmasini günceller.
         public async Task<ServiceResponse<CalisanGetirDto>> GuncelleFirma(CalisanGuncelleDto calisan)
         {
             ServiceResponse<CalisanGetirDto> response = new ServiceResponse<CalisanGetirDto>();
@@ -95,6 +100,8 @@ namespace API.Services.CalisanServices
             return response;
         }
 
+
+        // İlgili Calisan'i veritabanindan siler.
         public async Task<ServiceResponse<List<CalisanGetirDto>>> SilCalisan(int id)
         {
             ServiceResponse<List<CalisanGetirDto>> response = new ServiceResponse<List<CalisanGetirDto>>();

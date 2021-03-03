@@ -19,6 +19,7 @@ namespace API.Controllers
             _calisanService = calisanService;
         }
 
+
         [HttpGet]
         public async Task<ActionResult<List<CalisanGetirDto>>> GetirTümCalisanlar()
         {
@@ -26,11 +27,13 @@ namespace API.Controllers
             return Ok(calisanlar);
         }
 
+
         [HttpPost]
         public async Task<ActionResult<CalisanGetirDto>> EkleCalisan(CalisanEkleDto yeniCalisan)
         {
             return Ok(await _calisanService.EkleCalisan(yeniCalisan));
         }
+        
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<CalisanGetirDto>>> SilCalisan(int id)

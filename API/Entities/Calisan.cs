@@ -13,9 +13,9 @@ namespace Core.Entities
         public int FirmaId { get; set; }
         public Firma Firma { get; set; }
 
-        //Her Calisan birden fazla Departmanda görev alabilir ve
-        //her Departmanda birden fazla Calisan olabilir -> many to many iliski mevcut
-        // **CalisanDepartman tablosu bu iliskiyi saglayan joining tablosudur.
+        //Her Calisan birden fazla Departmanda görev alabilir ve her Departmanda birden fazla Calisan olabilir 
+        // --> many to many iliski mevcut
+        // **CalisanDepartman tablosu bu iliskiyi saglayan join tablosudur.
         public List<CalisanDepartman> CalisanDepartmanlari { get; set; }
 
     }

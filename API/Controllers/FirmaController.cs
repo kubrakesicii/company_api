@@ -15,12 +15,7 @@ namespace API.Controllers
         {
             _firmaService = firmaService;
         }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<FirmaGetirDto>> GetirFirma(int id)
-        {
-            return Ok(await _firmaService.GetirFirma(id));
-        }
+        
 
         [HttpGet]
         public async Task<ActionResult<List<FirmaGetirDto>>> GetirTümFirmalar()

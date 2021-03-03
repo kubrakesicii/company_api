@@ -16,24 +16,9 @@ namespace API.Services.FirmaServices
             _context = context;
         }
 
-    
-        public async Task<FirmaGetirDto> GetirFirma(int id)
-        {
-            Firma firma = await _context.Firmalar.FirstOrDefaultAsync(f => f.Id == id);
 
-            int count = _context.Calisanlar.Where(c => c.FirmaId == id).Count();
-        
-            FirmaGetirDto firmaGetirDto = new FirmaGetirDto{
-                Id = firma.Id,
-                Ad = firma.Ad,
-                CalisanSayisi = count
-            };
-
-            return firmaGetirDto;
-
-
-        }
-
+        // Bir firmadaki calisanlarin sayisini veren yardimci metot.
+        // Gerekli request metodunda kullanilacaktır.
         public int SayCalisanlar(int id)
         {
             int count = _context.Calisanlar.Where(c => c.FirmaId == id).Count();
@@ -41,6 +26,8 @@ namespace API.Services.FirmaServices
             return count;
         }
 
+
+        //Tüm Firma'lari calisan sayilariyla beraber listeler
         public async Task<List<FirmaGetirDto>> GetirTümFirmalar()
         {
             List<Firma> firmalar = await _context.Firmalar.ToListAsync();

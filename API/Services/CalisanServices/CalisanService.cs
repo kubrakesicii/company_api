@@ -28,13 +28,19 @@ namespace API.Services.CalisanServices
             await _context.Calisanlar.AddAsync(calisan);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<CalisanGetirDto>(calisan);
+            Calisan calisanEkle = await _context.Calisanlar
+                                     .Where(c => c.Id == calisan.Id)
+                                     .Include(c => c.Firma)
+                                     .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
+                                     .FirstOrDefaultAsync();
+
+            return _mapper.Map<CalisanGetirDto>(calisanEkle);
         }
 
         public async Task<List<CalisanGetirDto>> GetirTümCalisanlar()
         {
             List<Calisan> calisanlar = await _context.Calisanlar
-                                     .OrderByDescending(c => c.GirisTarihi)
+                                     .OrderByDescending(c => c.Id)
                                      .Include(c => c.Firma)
                                      .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
                                      .ToListAsync();
@@ -52,7 +58,13 @@ namespace API.Services.CalisanServices
              _context.Calisanlar.Update(guncelCalisan); 
              await _context.SaveChangesAsync();
 
-             return _mapper.Map<CalisanGetirDto>(guncelCalisan);
+             Calisan guncel = await _context.Calisanlar
+                                     .Where(c => c.Id == guncelCalisan.Id)
+                                     .Include(c => c.Firma)
+                                     .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
+                                     .FirstOrDefaultAsync();
+
+             return _mapper.Map<CalisanGetirDto>(guncel);
 
         }
 
@@ -63,8 +75,12 @@ namespace API.Services.CalisanServices
              _context.Calisanlar.Remove(calisan);
             await _context.SaveChangesAsync();
 
-            return _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(await _context.Calisanlar.ToListAsync());
- 
+            List<Calisan> calisanlar = await _context.Calisanlar
+                                     .Include(c => c.Firma)
+                                     .Include(c => c.CalisanDepartmanlari).ThenInclude(cd => cd.Departman)
+                                     .ToListAsync();
+
+            return _mapper.Map<List<Calisan>,List<CalisanGetirDto>>(calisanlar); 
         }
     }
 
